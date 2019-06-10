@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1560132443 source:e:\myworkspace\cpp\program_week\main.c
+	<stdio.h>
+	<stdlib.h>
+	"define.h"
+
+1560132725 e:\myworkspace\cpp\program_week\define.h
+
