@@ -3,6 +3,8 @@
 
 //enum STATUS{win,lose,ping};
 
+#include<stdio.h>
+
 typedef struct hero
 {
     char name[15];
@@ -10,6 +12,16 @@ typedef struct hero
 }HERO;
 
 HERO Hero[15];
+//我的英雄和敌方英雄
+HERO Hero1[3];
+HERO Hero2[3];
+
+char reg_name[30]="",reg_pwd[10]="";
+char on_name[30],on_pwd[10];
+
+void regist();
+int judge();
+int dl();
 
 /**
     HERO *h;
@@ -66,6 +78,7 @@ void Hero_get(HERO* hero)
         h.skills[0] = s1;   h.skills[1] = s2;   h.skills[2] = s3;
         hero[i] = h;
     }
+    fclose(fp);
 }
 
 int PK(int i,int j)//判断i的输赢,0赢,1输,2平局
