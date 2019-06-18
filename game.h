@@ -166,7 +166,7 @@ void writeInFile(Round rou,int h1,int h2,HERO *hero1,HERO *hero2)
 {
     FILE *fp;
     char temp[3];
-    strcat(account,".data");
+    //strcat(account,".data");
     fp = fopen(account,"a");
     if(fp == NULL)
     {
@@ -177,8 +177,8 @@ void writeInFile(Round rou,int h1,int h2,HERO *hero1,HERO *hero2)
         printf("文件打开失败");
         return;
     }
-    itoa(rou.flag,temp,10);
-    fputs("\nRound ",fp);
+    itoa(rou.flag - 1,temp,10);
+    fputs("Round ",fp);
     fputs(temp,fp);
     fputs(":",fp);
     fputs("我方出战英雄 ",fp);
@@ -211,6 +211,7 @@ void writeInFile(Round rou,int h1,int h2,HERO *hero1,HERO *hero2)
         fputs("布",fp);
         break;
     }
+    fputs("\n",fp);
 }
 
 #endif // GAME_H_INCLUDED

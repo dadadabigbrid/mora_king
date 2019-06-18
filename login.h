@@ -246,6 +246,7 @@ int dl()
             {
                 printf("\n\n\t\t登录成功，欢迎使用王者农药系统\n\n");
                 strcpy(account,on_name);
+                strcat(account,".data");
                 system("pause");
                 return 1;
             }
