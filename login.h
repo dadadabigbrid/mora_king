@@ -1,6 +1,15 @@
 #ifndef LOGIN_H_INCLUDED
 #define LOGIN_H_INCLUDED
 
+#include"define.h"
+#include<stdlib.h>
+#include<string.h>
+
+/**
+  *调用login()函数即可
+  返回值0登录失败，1登录成功
+*/
+
 void regist();
 int judge();
 int dl();
@@ -11,11 +20,11 @@ void add_account(char**str,char *n);
 int login()
 {
     //定义变量
-	char id;
+	int id;
 	//int j = 0;
 	int j = 0;
-	int choice[3];
-	int enemy_choice[3];
+	//int choice[3];
+	//int enemy_choice[3];
 	while(j == 0)
 	{
 		system("cls");
@@ -28,21 +37,20 @@ int login()
 
 		//输入功能编号
 		printf("\t\t请选择功能编号：");
-		scanf("%c",&id);
-		//获取回车键
-		getchar();
+		setbuf(stdin, NULL);
+		scanf("%d",&id);
 
 		//判断
 		switch(id)
 		{
-			case '1':
+			case 1:
 			    regist();
 			    break;
-			case '2':
+			case 2:
 				if(judge()==1)
 					j = dl();
 				break;
-			case '0':
+			case 0:
 			    exit(1);
 			    break;
 			default:
@@ -54,9 +62,9 @@ int login()
 	}
 
 	system("cls");
-	if(j)
+	if(j == 0)
     {
-        printf("Login Failed!");
+        printf("Login Failed!\n");
         return 0;
     }
     printf("Login Sucess!\n");
@@ -86,6 +94,7 @@ void regist()
         if(i < n)
             fgets(str[i],20,fp);
     }
+    i--;
     fclose(fp);
 	//清屏
 	system("pause");
@@ -144,7 +153,7 @@ void regist()
 //判断是否注册
 int judge()
 {
-    FILE *fp = fopen("account.data","r+");
+    FILE *fp = fopen("account.data","r");
     int n;
     int i,j,k;
     char ch;
@@ -212,16 +221,16 @@ int dl()
         ch = temp[0];
         while(ch != '#')
         {
-            ch = temp[j++];
-            names[i][j] = ch;
+            ch = temp[j];
+            names[i][j++] = ch;
         }
-        names[i][j] = '\0';
-        while(ch != '\0')
+        names[i][j-1] = '\0';
+        while(ch != '\n')
         {
-            ch = temp[j + (k++)];
-            password[i][k] = ch;
+            ch = temp[j + k];
+            password[i][k++] = ch;
         }
-        password[i][k] = '\0';
+        password[i][k-1] = '\0';
     }
     fclose(fp);
 	//三次登录验证
@@ -233,15 +242,15 @@ int dl()
 		scanf("%s",on_pwd);
 		for(j = 0;j < n;j++)
         {
-            if(strcmp(names[j],on_name) == 0 && strcmp(password[j],on_pwd))
+            if(strcmp(names[j],on_name) == 0 && strcmp(password[j],on_pwd) == 0)
             {
                 printf("\n\n\t\t登录成功，欢迎使用王者农药系统\n\n");
+                strcpy(account,on_name);
+                system("pause");
                 return 1;
-            }else
-            {
-                printf("\n\n\t\t登录失败，请重新登录，您还有%d次机会\n\n",3-i);
             }
         }
+        printf("\n\n\t\t登录失败，请重新登录，您还有%d次机会\n\n",3-i);
 
 	}
 	return 0;
@@ -278,7 +287,7 @@ int check(char *reg_name)
         }
         j--;
         names[i][j] = '\0';
-        printf("用户名%s\n",names[i]);
+        //printf("用户名%s\n",names[i]);
     }
     for(i = 0;i < n;i++)
     {
@@ -305,6 +314,7 @@ void add_account(char** str,char* n)
     for(i = 0;i < num;i ++)
     {
         fputs(str[i],fp);
+        fputs("\n",fp);
     }
     fclose(fp);
 

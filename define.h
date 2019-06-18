@@ -4,12 +4,26 @@
 //enum STATUS{win,lose,ping};
 
 #include<stdio.h>
+#include<string.h>
 
 typedef struct hero
 {
     char name[15];
     int skills[3];
 }HERO;
+
+typedef struct heroRank
+{
+	char name[15];
+    int win;        //赢的次数
+    int battletime; //出战次数
+	double winRatez;//英雄胜率
+	int rank;       //英雄排名
+
+}heroRank;
+
+char account[20];
+
 
 HERO Hero[15];
 //我的英雄和敌方英雄
@@ -28,7 +42,7 @@ int dl();
     h = (HERO*)malloc(sizeof(HERO)*15);
     Hero_get(h);
     将HERO.data的数据读入存储到数组h里面
- */
+*/
 
 void Hero_get(HERO* hero)
 {
@@ -66,59 +80,15 @@ void Hero_get(HERO* hero)
         ch = str[j++];
         s3 = (int)(ch - 48);
 
-        ch = names[0];
-        k = 0;
-        while(ch != '\0')
-        {
-            ch = names[k];
-            h.name[k] = names[k];
-            k++;
-        }
-        h.name[k] = '\0';
+        strcpy(h.name,names);
+
         h.skills[0] = s1;   h.skills[1] = s2;   h.skills[2] = s3;
         hero[i] = h;
+
     }
     fclose(fp);
 }
 
-int PK(int i,int j)//判断i的输赢,0赢,1输,2平局
-{
-    //剪刀0,石头1,布2
-    if(i == 0)
-    {
-        switch(j)
-        {
-            case 0:
-                return 2;
-            case 1:
-                return 1;
-            case 2:
-                return 0;
-        }
-    }else if(i == 1)
-    {
-        switch(j)
-        {
-        case 0:
-            return 0;
-        case 1:
-            return 2;
-        case 2:
-            return 1;
-        }
-    }else if(i == 2)
-    {
-        switch(j)
-        {
-        case 0:
-            return 1;
-        case 1:
-            return 0;
-        case 2:
-            return 2;
-        }
-    }
-}
 
 
 #endif // DEFINE_H_INCLUDED
