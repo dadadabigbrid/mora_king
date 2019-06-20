@@ -315,7 +315,8 @@ void add_account(char** str,char* n)
     for(i = 0;i < num;i ++)
     {
         fputs(str[i],fp);
-        fputs("\n",fp);
+        if(i == num - 2)
+            fputs("\n",fp);
     }
     fclose(fp);
 
