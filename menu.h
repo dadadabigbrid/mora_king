@@ -7,25 +7,32 @@
 
 void Start()
 {
-    functionMenu();
+    //functionMenu();
     functionChoice();
 }
 
 void functionMenu()//功能菜单
 {
+
     printf("*******************************************************\n");
 	printf("*\tA.开始游戏\n*\tB.排行榜\n*\tC.信息查询\n*\tD.帮助\n*\tE.退出\n");
 	printf("*******************************************************\n");
+
 }
 
 void functionChoice()//功能选择
 {
 	int i=1;
 	char choice;
-	printf("请输入你的选择: (例：A。)");
-	//使stdin输入流由默认缓冲区转为无缓冲区
-	setbuf(stdin, NULL);
+
+	//printf("请输入你的选择: (例：A。)");
+
 	do{
+	    system("cls");
+        functionMenu();
+        printf("请输入你的选择: (例：A。)");
+        //使stdin输入流由默认缓冲区转为无缓冲区
+        setbuf(stdin, NULL);
         scanf("%c",&choice);
         getchar();
         switch(choice)
@@ -33,19 +40,18 @@ void functionChoice()//功能选择
         case'A':
             //开始游戏
             start_game();
-            i=0;
+            //i=0;
             break;
         case'B':
             //排行榜
-            i=0;
+            showRank();
+            //i = 0;
             break;
         case'C':
             //玩家信息查询
-            i=0;
             break;
         case'D':
             //帮助
-            i=0;
             break;
         case'E':
             //退出
@@ -62,22 +68,42 @@ void start_game()
 {
     int i;
     int result = 0;
+
     //从文件中读取Hero列表
     Hero_get(Hero);
+
+    HeroRank_get();
+    PlayerRank_get();
+
+    //登录时已经获取了玩家列表
+    //PlayerRank_get();
     dispalyHeroMenu();
     heroChoice(Hero1,Hero2);
+
     for(i = 0;i < 9;i++)
     {
         result += Battle(Hero1,Hero2);
     }
+
     if(result > 0)
         printf("\n*******************************************************\n恭喜您最终获得了胜利");
+    else
+    {
+        printf("\n*******************************************************\n");
+    }
+
+    HeroRankSort();
+    PlayerRankSort();
+
+    readInHeroFile();
+    readInPlayerFile();
 
 }
 
 void dispalyHeroMenu()//显示英雄及其技能
 {
 	int i,mark;//mark为英雄编号
+
 	for(i=0;i<15;i++)
     {
         mark=i+1;
@@ -93,7 +119,9 @@ void dispalyHeroMenu()//显示英雄及其技能
 void heroChoice(HERO *hero1,HERO *hero2)
 {
 	int i,s1[3]={0},s2[3]={0};
+
     printf("请输入要选取的英雄的编号:(例:1 2 3)");
+
 	for(i=0;i<3;i++)
     {
         //使stdin输入流由默认缓冲区转为无缓冲区
@@ -117,13 +145,16 @@ void heroChoice(HERO *hero1,HERO *hero2)
 		}while(s2[i]>15||s2[i]<0||!Repetition(s2,i,s2[i]));//确定产生的随机数的范围及重复条件
 		//电脑随机选取英雄
     }
+
     system("cls");
     printf("*******************************************************\n您选择的英雄是:\n");
+
     for(i = 0;i < 3;i++)
     {
         printf("%2d.%12s\t剪刀:%d\t石头:%d\t布:%d\n",i+1,Hero[s1[i]].name,Hero[s1[i]].skills[0],Hero[s1[i]].skills[1],Hero[s1[i]].skills[2]);
     }
     printf("*******************************************************\n");
+
     printf("敌方选择的英雄是:\n");
     for(i = 0;i < 3;i++)
     {
@@ -140,6 +171,78 @@ int Repetition(int *p,int n,int last)
 			return 0;
 	}
 	return 1;
+}
+
+void readInPlayerFile()
+{
+    FILE *fp;
+    char temp[10];
+    int i;
+
+    fp = fopen("playerRank.data","w");
+    if(fp == NULL)
+    {
+        printf("文件打开失败");
+        return;
+    }
+
+    itoa(player_num + 1,temp,10);
+    fputs(temp,fp);
+    fputs("\n",fp);
+    for(i = 0;i <= player_num;i++)
+    {
+        itoa(PlayerRank[i].rank,temp,10);
+        fputs(temp,fp);
+        fputs(",",fp);
+
+        fputs(PlayerRank[i].names,fp);
+        fputs(",",fp);
+
+        itoa(PlayerRank[i].win,temp,10);
+        fputs(temp,fp);
+        fputs(",",fp);
+
+        itoa(PlayerRank[i].allRound,temp,10);
+        fputs(temp,fp);
+
+        fputs("\n",fp);
+    }
+    fclose(fp);
+}
+
+void readInHeroFile()
+{
+    FILE *fp;
+    char temp[15];
+    int i;
+
+    fp = fopen("heroRank.data","w");
+    if(fp == NULL)
+    {
+        printf("文件打开失败");
+        return;
+    }
+
+    for(i = 0;i < 15;i++)
+    {
+        itoa(HeroRank[i].rank,temp,10);
+        fputs(temp,fp);
+        fputs(",",fp);
+
+        fputs(HeroRank[i].names,fp);
+        fputs(",",fp);
+
+        itoa(HeroRank[i].win,temp,10);
+        fputs(temp,fp);
+        fputs(",",fp);
+
+        itoa(HeroRank[i].allRound,temp,10);
+        fputs(temp,fp);
+
+        fputs("\n",fp);
+
+    }
+
 }
 
 

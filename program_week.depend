@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1560843647 source:e:\myworkspace\cpp\program_week\main.c
+1561035262 source:e:\myworkspace\cpp\program_week\main.c
 	"define.h"
 	"login.h"
-	"fun.h"
 	"menu.h"
+	"rank.h"
 
-1560840343 e:\myworkspace\cpp\program_week\define.h
+1561034282 e:\myworkspace\cpp\program_week\define.h
 	<stdio.h>
 	<string.h>
 
@@ -14,20 +14,23 @@
 	<stdlib.h>
 	<time.h>
 
-1561011514 e:\myworkspace\cpp\program_week\login.h
+1561082167 e:\myworkspace\cpp\program_week\login.h
 	"define.h"
 	<stdlib.h>
 	<string.h>
 
-1560843298 e:\myworkspace\cpp\program_week\menu.h
+1561083439 e:\myworkspace\cpp\program_week\menu.h
 	<stdio.h>
 	<stdlib.h>
 	"define.h"
 	"game.h"
 
-1560846759 e:\myworkspace\cpp\program_week\game.h
+1561045594 e:\myworkspace\cpp\program_week\game.h
 	<time.h>
 	<conio.h>
 	"define.h"
 	<string.h>
+
+1561036747 e:\myworkspace\cpp\program_week\rank.h
+	"define.h"
 

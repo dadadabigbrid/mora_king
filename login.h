@@ -25,6 +25,7 @@ int login()
 	int j = 0;
 	//int choice[3];
 	//int enemy_choice[3];
+
 	while(j == 0)
 	{
 		system("cls");
@@ -85,17 +86,19 @@ void regist()
         printf("打开文件失败！\n");
         return;
     }
+
     fgets(temp,20,fp);
     n = atoi(temp);
     str = (char**)malloc(sizeof(char*)*(n+1));
+
     for(i = 0;i < n + 1;i++)
     {
         str[i] = (char*)malloc(sizeof(char)*20);
         if(i < n)
             fgets(str[i],20,fp);
     }
+
     i--;
-    fclose(fp);
 	//清屏
 	system("pause");
 	system("cls");
@@ -105,6 +108,8 @@ void regist()
 	{
 		//输入用户名
 		printf("\t\t请输入用户名[不能大于10个字符]：");
+		//使stdin输入流由默认缓冲区转为无缓冲区
+        setbuf(stdin, NULL);
 		scanf("%s",reg_name);
 
 		if(check(reg_name))
@@ -122,6 +127,8 @@ void regist()
 			{
 				//输入密码
 				printf("\n\t\t请输入密码[密码长度为八位]：");
+				//使stdin输入流由默认缓冲区转为无缓冲区
+                setbuf(stdin, NULL);
 				scanf("%s",reg_pwd);
 
 				//判断密码
@@ -148,6 +155,13 @@ void regist()
 		}
 	}
 	fclose(fp);
+
+	for(i = 0;i < n;i++)
+    {
+        free(str[i]);
+    }
+    free(str);
+
 }
 
 //判断是否注册
@@ -198,11 +212,13 @@ int dl()
     char ch;
     char temp[20];
     char **names,**password;
+
     if(fp == NULL)
     {
         printf("打开文件失败！");
         return 0;
     }
+
 	system("pause");
 	system("cls");
 
@@ -212,6 +228,7 @@ int dl()
     n = atoi(temp);
     names = (char**)malloc(sizeof(char*)*n);
     password = (char**)malloc(sizeof(char*)*n);
+
     for(i = 0;i < n;i++)
     {
         j = k = 0;
@@ -233,6 +250,7 @@ int dl()
         password[i][k-1] = '\0';
     }
     fclose(fp);
+
 	//三次登录验证
 	for(i=1;i<=3;i++)
 	{
@@ -246,6 +264,7 @@ int dl()
             {
                 printf("\n\n\t\t登录成功，欢迎使用王者农药系统\n\n");
                 strcpy(account,on_name);
+                PlayerRank_get();
                 strcat(account,".data");
                 system("pause");
                 return 1;
@@ -254,6 +273,7 @@ int dl()
         printf("\n\n\t\t登录失败，请重新登录，您还有%d次机会\n\n",3-i);
 
 	}
+
 	return 0;
 
 }
@@ -266,12 +286,14 @@ int check(char *reg_name)
     char ch;
     char temp[20];
     char **names;
+
     if(fp == NULL)
     {
         printf("打开文件失败！");
-        return;
+        return 0;
     }
     fgets(temp,10,fp);
+
 
     n = atoi(temp);
     names = (char**)malloc(sizeof(char*)*n);
@@ -290,6 +312,7 @@ int check(char *reg_name)
         names[i][j] = '\0';
         //printf("用户名%s\n",names[i]);
     }
+
     for(i = 0;i < n;i++)
     {
         if(strcmp(reg_name,names[i]) == 0)
@@ -303,12 +326,14 @@ void add_account(char** str,char* n)
 {
     int num = atoi(n) + 1;
     int i;
+
     FILE *fp = fopen("account.data","w");
     if(fp == NULL)
     {
         printf("打开文件失败\n");
         return;
     }
+
     n = itoa(num,n,10);
     fputs(n,fp);
     fputs("\n",fp);
@@ -318,6 +343,7 @@ void add_account(char** str,char* n)
         if(i == num - 2)
             fputs("\n",fp);
     }
+
     fclose(fp);
 
 }

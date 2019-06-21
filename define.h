@@ -8,19 +8,26 @@
 
 typedef struct hero
 {
+    int flag;
     char name[15];
     int skills[3];
 }HERO;
 
-typedef struct heroRank
+/**
+可用于展示玩家排名和英雄排名
+*/
+typedef struct _hero_rank
 {
-	char name[15];
-    int win;        //赢的次数
-    int battletime; //出战次数
-	double winRatez;//英雄胜率
-	int rank;       //英雄排名
+    int rank;
+    char names[15];
+    int win;
+    int allRound;
+}Rank;
 
-}heroRank;
+Rank HeroRank[15];
+Rank *PlayerRank = NULL;
+int player;   //当前玩家
+int player_num;//玩家列表中玩家的个数
 
 char account[20];
 
@@ -47,11 +54,12 @@ int dl();
 void Hero_get(HERO* hero)
 {
     HERO h;
-    int i,j,k;
+    int i,j;
     char names[15];
     char str[50];
     int s1,s2,s3;
     char ch;
+
     FILE *fp;
     fp = fopen("HERO.data","r");
     if(fp == NULL)
@@ -59,6 +67,7 @@ void Hero_get(HERO* hero)
         printf("FILE OPEN FAILEd!");
         return;
     }
+
     for(i = 0;i < 15;i++)
     {
         fgets(str,50,fp);
@@ -83,12 +92,12 @@ void Hero_get(HERO* hero)
         strcpy(h.name,names);
 
         h.skills[0] = s1;   h.skills[1] = s2;   h.skills[2] = s3;
+        h.flag = i+1;
         hero[i] = h;
 
     }
+
     fclose(fp);
 }
-
-
 
 #endif // DEFINE_H_INCLUDED

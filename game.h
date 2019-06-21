@@ -53,6 +53,7 @@ int Battle(HERO *hero1,HERO *hero2)
                 printf("\n时间到\n");
                 heroing1 = rand()%3;
             }
+            //heroing1 = rand()%3;
         }
         printf("我方出战英雄是:%s",hero1[heroing1].name);
         /*scanf("%d",&heroing1);
@@ -88,6 +89,8 @@ int Battle(HERO *hero1,HERO *hero2)
     {
     case 0:
         printf("\n恭喜你,第%d局获得胜利",flag);
+        (HeroRank[hero1[heroing1].flag].win)++;
+        (PlayerRank[player].win)++;
         break;
     case 1:
         printf("\n菜\n第%d局输了",flag);
@@ -96,6 +99,9 @@ int Battle(HERO *hero1,HERO *hero2)
         printf("\n第%d局平局",flag);
         break;
     }
+
+    (PlayerRank[player].allRound)++;
+    (HeroRank[hero1[heroing1].flag].allRound)++;
 
     //每局结束之后的处理
     flag++;
@@ -131,33 +137,33 @@ int PK(int i,int j)//判断i的输赢,0赢,1输,2平局
         switch(j)
         {
             case 0:
-                return 2;
-            case 1:
-                return 1;
-            case 2:
                 return 0;
+            case 1:
+                return -1;
+            case 2:
+                return 1;
         }
     }else if(i == 1)
     {
         switch(j)
         {
         case 0:
-            return 0;
-        case 1:
-            return 2;
-        case 2:
             return 1;
+        case 1:
+            return 0;
+        case 2:
+            return -1;
         }
     }else if(i == 2)
     {
         switch(j)
         {
         case 0:
-            return 1;
+            return -1;
         case 1:
-            return 0;
+            return 1;
         case 2:
-            return 2;
+            return 0;
         }
     }
 }
@@ -166,17 +172,20 @@ void writeInFile(Round rou,int h1,int h2,HERO *hero1,HERO *hero2)
 {
     FILE *fp;
     char temp[3];
+
     //strcat(account,".data");
     fp = fopen(account,"a");
     if(fp == NULL)
     {
         fp = fopen(account,"w");
     }
+
     if(fp == NULL)
     {
         printf("文件打开失败");
         return;
     }
+
     itoa(rou.flag - 1,temp,10);
     fputs("Round ",fp);
     fputs(temp,fp);
@@ -186,6 +195,7 @@ void writeInFile(Round rou,int h1,int h2,HERO *hero1,HERO *hero2)
     fputs(",敌方出战英雄 ",fp);
     fputs(hero2[h2].name,fp);
     fputs(",我方出招 ",fp);
+
     switch(rou.Myskill)
     {
     case 0:
@@ -198,7 +208,9 @@ void writeInFile(Round rou,int h1,int h2,HERO *hero1,HERO *hero2)
         fputs("布",fp);
         break;
     }
+
     fputs(",敌方出招 ",fp);
+
     switch(rou.Eneskill)
     {
     case 0:
@@ -211,6 +223,7 @@ void writeInFile(Round rou,int h1,int h2,HERO *hero1,HERO *hero2)
         fputs("布",fp);
         break;
     }
+
     fputs("\n",fp);
 }
 
