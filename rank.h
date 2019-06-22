@@ -24,11 +24,13 @@ void showRank()
         {
         case'A':
             PlayerRank_get();
+            PlayerRankSort();
             display_playerRank();
             system("pause");
             break;
         case'B':
             HeroRank_get();
+            HeroRankSort();
             display_heroRank();
             system("pause");
             break;
@@ -235,7 +237,7 @@ void HeroRankSort()
 
 void PlayerRankSort()
 {
-    FILE *fp;
+    /*FILE *fp;
     int n;
     char temp[10];
 
@@ -248,11 +250,11 @@ void PlayerRankSort()
 
     fgets(temp,10,fp);
 
-    n = atoi(temp);
+    n = atoi(temp);*/
 
-    RankSort(PlayerRank,n);
+    RankSort(PlayerRank,player_num);
 
-    fclose(fp);
+   // fclose(fp);
 }
 
 void RankSort(Rank *r,int n)

@@ -169,44 +169,29 @@ int judge()
 {
     FILE *fp = fopen("account.data","r");
     int n;
-    int i,j,k;
-    char ch;
     char temp[20];
-    char **names;
+
     fgets(temp,10,fp);
 
     n = atoi(temp);
-    names = (char**)malloc(sizeof(char*)*n);
-    for(i = 0;i < n;i++)
+
+    if(n == 0)
     {
-        j = k = 0;
-        names[i] = (char*)malloc(sizeof(char)*20);
-        fgets(temp,20,fp);
-        ch = temp[0];
-        while(ch != '#')
-        {
-            ch = temp[j++];
-            names[i][j] = ch;
-        }
-        names[i][j] = '\0';
-        if(strcmp(names[0],"\0")==0)
-        {
-            printf("\n\n\t\tÄúÉÐÎ´×¢²á£¬ÇëÏÈ×¢²á£¡\n\n");
-            return 0;
-        }
-        else
-        {
-            return 1;
-        }
+        printf("\n\n\t\tÄúÉÐÎ´×¢²á£¬ÇëÏÈ×¢²á£¡\n\n");
+        system("pause");
+        fclose(fp);
+        return 0;
     }
+
     fclose(fp);
 
+    return 1;
 }
 
 //ÓÃ»§µÇÂ¼
 int dl()
 {
-	FILE *fp = fopen("account.data","r+");
+	FILE *fp = fopen("account.data","r");
     int n;
     int i,j,k;
     char ch;
@@ -242,12 +227,12 @@ int dl()
             names[i][j++] = ch;
         }
         names[i][j-1] = '\0';
-        while(ch != '\n')
+        while(ch != '\0')
         {
             ch = temp[j + k];
             password[i][k++] = ch;
         }
-        password[i][k-1] = '\0';
+        password[i][k-2] = '\0';
     }
     fclose(fp);
 

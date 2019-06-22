@@ -15,7 +15,7 @@ void functionMenu()//功能菜单
 {
 
     printf("*******************************************************\n");
-	printf("*\tA.开始游戏\n*\tB.排行榜\n*\tC.信息查询\n*\tD.帮助\n*\tE.退出\n");
+	printf("*\tA.开始游戏\n*\tB.排行榜\n*\tC.帮助\n*\tD.退出\n");
 	printf("*******************************************************\n");
 
 }
@@ -34,7 +34,6 @@ void functionChoice()//功能选择
         //使stdin输入流由默认缓冲区转为无缓冲区
         setbuf(stdin, NULL);
         scanf("%c",&choice);
-        getchar();
         switch(choice)
         {
         case'A':
@@ -48,12 +47,11 @@ void functionChoice()//功能选择
             //i = 0;
             break;
         case'C':
-            //玩家信息查询
+            //帮助
+            printf("\t玩家选取三位己方英雄，对阵电脑随机选取的三位英雄\n\t电脑在三位英雄中随机选取一位，随机出招（招数可使用数量不为0），对应可用招数数量减一\n\t我方选取一位英雄，英雄随机出招，对应可用招数数量也减一\n\t如果我方胜，我方胜利次数加1，否则对方胜利次数加1\n\t一场游戏总共进行8次对战\n\t玩家加油鸭\n");
+            system("pause");
             break;
         case'D':
-            //帮助
-            break;
-        case'E':
             //退出
             i=0;
             break;

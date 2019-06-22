@@ -2,6 +2,7 @@
 #include"login.h"
 #include"menu.h"
 #include"rank.h"
+#include"game.h"
 
 int main()
 {
@@ -9,9 +10,6 @@ int main()
         exit(1);
     Start();
     //start_game();
-    /*HeroRank_get();
-    display_heroRank();
-    PlayerRank_get();
-    display_playerRank();*/
+    //login();
     return 0;
 }
